@@ -1,20 +1,28 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`
+})
+
+
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: 'Betty Briggs',
   },
   plugins: [
     {
       resolve: 'gatsby-source-prismic',
       options: {
         // Prismic repository name
-        repositoryName: '',
+        repositoryName: process.env.PRISMIC_REPO,
 
         // Api Access token from prismic
-        accessToken: '',
+        accessToken: process.env.ACCESS_TOKEN,
 
         // Generate correct links
         linkResolver: ({ node, key, value }) => doc => {
           // Link resolver
+          // if (doc.type === 'post') return `/posts/${doc.uid}`
+
+          return `/doc/${doc.uid}`
         },
 
         // Only if you need something available in your link resolver
@@ -29,7 +37,7 @@ module.exports = {
             return null
           }
         ),
-        
+
         // default language when fetching documents
         lang: '*'
       }
